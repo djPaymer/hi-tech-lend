@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px var(--site-margin);
+
+    .logo {
+        text-decoration: none;
+    }
+
+    nav {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        
+        ul {
+            display: flex;
+            gap: 12px;
+            list-style: none;
+
+            li a {
+                text-decoration: none;
+                color: #000;
+
+                &:hover {
+                    color: red;
+                }
+            }
+        }
+    }
+}
