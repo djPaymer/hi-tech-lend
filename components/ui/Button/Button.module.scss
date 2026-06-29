@@ -39,3 +39,15 @@
     transform: scale(0.95);
   }
 }
+
+.primary {
+  color: #ffffff;
+  
+  &::before {
+    background: #007bff;
+  }
+  
+  &:hover {
+    color: #ffffff;
+  }
+}

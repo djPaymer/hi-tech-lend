@@ -1,0 +1,296 @@
+// app/not-found.module.scss
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+
+  // Зубной фон (паттерн)
+  &::before {
+    content: '🦷';
+    position: absolute;
+    font-size: 60px;
+    opacity: 0.05;
+    animation: floatTooth 20s linear infinite;
+    pointer-events: none;
+  }
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  perspective: 1000px;
+}
+
+.jaw {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+// Верхняя челюсть
+.upperJaw {
+  display: flex;
+  gap: 12px;
+  padding: 20px 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px 20px 0 0;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-bottom: none;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  transform-origin: bottom center;
+  animation: jawShake 3s ease-in-out infinite;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    border-radius: 2px;
+  }
+}
+
+// Нижняя челюсть (с анимацией открытия)
+.lowerJaw {
+  display: flex;
+  gap: 12px;
+  padding: 20px 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0 0 20px 20px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: none;
+  width: 100%;
+  justify-content: center;
+  transform-origin: top center;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: rotateX(0deg) scaleY(1);
+
+  &.open {
+    transform: rotateX(15deg) scaleY(0.9);
+    animation: jawOpen 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+}
+
+// Зубы
+.tooth {
+  font-size: 40px;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  animation: toothShine 2s ease-in-out infinite;
+
+  &:nth-child(odd) {
+    animation-delay: 0.5s;
+  }
+
+  &:hover {
+    transform: scale(1.2) rotate(-10deg);
+  }
+}
+
+// Контент между челюстями
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  margin: -10px 0;
+  width: 100%;
+  text-align: center;
+  transform-origin: center;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  opacity: 0;
+  transform: scale(0.5) rotate(-10deg);
+
+  &.open {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.errorContent {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  animation: contentPulse 2s ease-in-out infinite;
+}
+
+.errorCode {
+  font-size: 120px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1;
+  font-family: var(--font-cormorant), serif;
+  animation: errorPulse 2s ease-in-out infinite;
+}
+
+.errorText {
+  font-size: 32px;
+  color: #333;
+  margin: 10px 0 20px;
+  font-weight: 600;
+  font-family: var(--font-manrope), sans-serif;
+}
+
+.errorDescription {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 30px;
+  font-family: var(--font-manrope), sans-serif;
+  line-height: 1.6;
+}
+
+.homeButton {
+  display: inline-block;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  font-family: var(--font-manrope), sans-serif;
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+  }
+}
+
+// Анимации
+@keyframes jawOpen {
+  0% {
+    transform: rotateX(0deg) scaleY(1);
+  }
+  50% {
+    transform: rotateX(20deg) scaleY(0.85);
+  }
+  100% {
+    transform: rotateX(15deg) scaleY(0.9);
+  }
+}
+
+@keyframes jawShake {
+  0%, 100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes toothShine {
+  0%, 100% {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 4px 20px rgba(255, 215, 0, 0.4));
+  }
+}
+
+@keyframes errorPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes contentPulse {
+  0%, 100% {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 20px 80px rgba(102, 126, 234, 0.4);
+  }
+}
+
+@keyframes floatTooth {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(100px, -100px) rotate(90deg);
+  }
+  50% {
+    transform: translate(200px, 0) rotate(180deg);
+  }
+  75% {
+    transform: translate(100px, 100px) rotate(270deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .upperJaw, .lowerJaw {
+    padding: 12px 20px;
+    gap: 8px;
+  }
+
+  .tooth {
+    font-size: 28px;
+  }
+
+  .errorCode {
+    font-size: 80px;
+  }
+
+  .errorText {
+    font-size: 24px;
+  }
+
+  .errorDescription {
+    font-size: 16px;
+  }
+
+  .homeButton {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+
+  .errorContent {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .upperJaw, .lowerJaw {
+    padding: 8px 12px;
+    gap: 4px;
+  }
+
+  .tooth {
+    font-size: 20px;
+  }
+
+  .errorCode {
+    font-size: 56px;
+  }
+
+  .errorText {
+    font-size: 18px;
+  }
+}
