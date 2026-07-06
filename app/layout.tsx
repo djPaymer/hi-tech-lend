@@ -1,39 +1,32 @@
-import { Cormorant, Manrope } from "next/font/google";
-import localFont from "next/font/local";
-import "./globals.scss";
-import Header from "@/components/ui/Header/Header";
-
-export const neueMontreal = localFont({
-  src: "../public/font/NeueMontreal-Regular.otf",
-  variable: "--font-neue-montreal",
-  display: "swap",
-});
-
-export const cormorant = Cormorant({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-cormorant',
-  display: 'swap',
-})
-
-export const manrope = Manrope({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-manrope', // ← CSS-переменная для Manrope
-  display: 'swap',
-})
+import "./globals.css";
+import { AntdRegistry } from '@ant-design/nextjs-registry' ;  
+import { ConfigProvider } from 'antd';
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html>
-      <body>
-        <Header></Header>
-        {children}
-      </body>
-    </html>
-  );
+	return (
+		<html>
+			<body>
+				<AntdRegistry>
+					<ConfigProvider
+						theme={{
+							token: {
+							
+							},
+							components: {
+								Anchor: {
+									colorText: 'white'
+								}
+							}
+						}}
+					>
+						{ children } 
+					</ConfigProvider>
+				</AntdRegistry>
+			</body>
+		</html>
+	);
 }
